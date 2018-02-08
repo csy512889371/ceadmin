@@ -45,19 +45,19 @@ class NavLeft extends Component {
                 const result = res.data;
                 const data = result.voList;
                 let pcMap = {};
-                let menus = Array.of();
+                let menus = [];
                 for (let i in data) {
                     if (data.hasOwnProperty(i)) {
                         let menu = data[i];
                         let parentId = menu.parentId;
                         if (parentId === null) {
                             let top = pcMap.top;
-                            top = top === undefined ? Array.of() : top;
+                            top = top === undefined ? [] : top;
                             top.push(menu);
                             pcMap.top = top;
                         } else {
                             let children = pcMap[parentId];
-                            children = children === undefined ? Array.of() : children;
+                            children = children === undefined ? [] : children;
                             children.push(menu);
                             pcMap[parentId] = children;
                         }
@@ -69,7 +69,7 @@ class NavLeft extends Component {
                 for (let i in pcMapTop) {
                     if (pcMapTop.hasOwnProperty(i)) {
                         let menu = pcMapTop[i];
-                        let tree = this.recursiveTree(menu, pcMap, Array.of(), navKeyMap);
+                        let tree = this.recursiveTree(menu, pcMap, [], navKeyMap);
                         menus.push(tree.html);
                     }
                 }
@@ -92,7 +92,7 @@ class NavLeft extends Component {
     };
 
     recursiveTree (parent, pcMap, navKeyArray, navMap) {
-        parent.children = Array.of();
+        parent.children = [];
         let map = {};
         let html = '';
         if (pcMap[parent.id] === undefined) {
